@@ -8,6 +8,7 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import { SwitchLanguage } from "@/widgets/Language";
 
 export const Header = () => {
   return (
@@ -42,6 +43,7 @@ export const Header = () => {
             Sign Up
           </Button>
         </NavbarItem>
+        <SwitchLanguage />
       </NavbarContent>
     </Navbar>
   );
