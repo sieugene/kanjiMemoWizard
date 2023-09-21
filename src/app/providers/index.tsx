@@ -1,6 +1,6 @@
 import { NextUIProvider } from "@nextui-org/react";
 import React, { FC } from "react";
-import { ThemeProvider, DefaultTheme } from "styled-components";
+import { DefaultTheme, ThemeProvider } from "styled-components";
 
 const theme: DefaultTheme = {
   colors: {
