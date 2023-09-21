@@ -14,6 +14,7 @@ pnpm dev
 bun dev
 ```
 
+Radicals [https://yag-ays.github.io/project/kanjivg-radical/]
 
 Kanji list [https://github.com/davidluzgouveia/kanji-data]
 

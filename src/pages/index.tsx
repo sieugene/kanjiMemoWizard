@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 
-import { KanjiList } from "@/entities/kanjiList";
+import { KanjiList } from "@/features/kanjiList";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const inter = Inter({ subsets: ["latin"] });
