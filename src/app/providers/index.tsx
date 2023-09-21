@@ -1,13 +1,7 @@
+import { theme } from "@/shared/theme";
 import { NextUIProvider } from "@nextui-org/react";
 import React, { FC } from "react";
-import { DefaultTheme, ThemeProvider } from "styled-components";
-
-const theme: DefaultTheme = {
-  colors: {
-    primary: "#111",
-    secondary: "#0070f3",
-  },
-};
+import { ThemeProvider } from "styled-components";
 
 export const Providers: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (

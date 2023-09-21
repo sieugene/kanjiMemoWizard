@@ -1,10 +1,8 @@
+/* eslint-disable no-unused-vars */
+import { theme } from "@/shared/theme";
 import "styled-components";
 
 declare module "styled-components" {
-  export interface DefaultTheme {
-    colors: {
-      primary: string;
-      secondary: string;
-    };
-  }
+  type CustomTheme = typeof theme;
+  export interface DefaultTheme extends CustomTheme {}
 }
