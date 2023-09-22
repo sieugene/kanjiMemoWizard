@@ -3,6 +3,7 @@ import { FC } from "react";
 import { useMnemonic } from "../../hooks/useMnemonic";
 import { CircularProgress } from "@nextui-org/react";
 import styled from "styled-components";
+import { useRadicalsTree } from "../../hooks/useRadicalsTree";
 
 type Props = {
   symbol: string;
@@ -10,6 +11,7 @@ type Props = {
 export const KanjiDetails: FC<Props> = ({ symbol }) => {
   const kanji = useFindKanji(symbol);
   const { data: mnemonicData, isLoading } = useMnemonic(symbol);
+  const tree = useRadicalsTree(symbol);
   return (
     <div>
       {kanji?.kanji}
@@ -36,6 +38,19 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
       {kanji?.meanings?.map((meaning, index) => (
         <p key={index}>{meaning}</p>
       ))}
+      <hr />
+
+      <Tree>
+        {tree?.map((radical) => (
+          <div key={radical?.element}>
+            <p>{radical?.element}</p>
+            <h1>deep</h1>
+            {radical?.deep?.length
+              ? radical?.deep?.map((e) => <p key={e}>{e}</p>)
+              : "not"}
+          </div>
+        ))}
+      </Tree>
     </div>
   );
 };
@@ -45,4 +60,9 @@ const Mnemonic = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+`;
+
+const Tree = styled.div`
+  display: flex;
+  gap: 11px;
 `;

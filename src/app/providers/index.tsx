@@ -6,7 +6,7 @@ import { SWRConfig } from "swr";
 
 export const Providers: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <SWRConfig value={{ provider: () => new Map() }}>
+    <SWRConfig value={{ provider: () => new Map(), revalidateOnFocus: false }}>
       <ThemeProvider theme={theme}>
         <NextUIProvider>{children}</NextUIProvider>
       </ThemeProvider>
