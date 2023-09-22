@@ -2,6 +2,7 @@ import { useFindKanji } from "@/features/kanjiList/hooks/useFindKanji";
 import { FC } from "react";
 import { useMnemonic } from "../../hooks/useMnemonic";
 import { CircularProgress } from "@nextui-org/react";
+import styled from "styled-components";
 
 type Props = {
   symbol: string;
@@ -16,12 +17,16 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
       {isLoading ? (
         <CircularProgress aria-label="Loading..." />
       ) : (
-        <>
-          <p>{mnemonicData?.mnemonic}</p>
-          <h3>
-            <a href={mnemonicData?.source}>source</a>
-          </h3>
-        </>
+        <Mnemonic>
+          {mnemonicData?.map((data, index) => (
+            <div key={index}>
+              <h3>
+                <a href={data.source}>Source link</a>
+              </h3>
+              <h2>Story - {data.mnemonic}</h2>
+            </div>
+          ))}
+        </Mnemonic>
       )}
       <h2>Level - {kanji?.jlpt_new}</h2>
       <h2>Readings</h2>
@@ -34,3 +39,10 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
     </div>
   );
 };
+
+const Mnemonic = styled.div`
+  border: 1px solid white;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+`;

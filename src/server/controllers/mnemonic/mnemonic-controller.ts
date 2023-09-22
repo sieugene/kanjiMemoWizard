@@ -20,6 +20,7 @@ export class MnemonicContoller {
             const data = await this.service.scrapMnemonic(body.symbol);
             res.json(data as any);
           } catch (error: any) {
+            console.log(error);
             res.status(400).json({
               error: error?.message || error?.data || "Unknown error",
             });

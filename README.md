@@ -16,6 +16,9 @@ bun dev
 
 Radicals [https://yag-ays.github.io/project/kanjivg-radical/]
 
+Mnemonic Monash[http://nihongo.monash.edu/henshall_mnem.html]
+Mnemonic KanjiDamage[https://www.kanjidamage.com/]
+
 Kanji list [https://github.com/davidluzgouveia/kanji-data]
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
