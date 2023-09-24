@@ -5,7 +5,6 @@ export const useMnemonic = (symbol: string) => {
   return useSWR(
     symbol && `kanji/mnemoni/${symbol}`,
     async () => {
-      debugger;
       const response = await MAIN_API.mnemonic.getMnemonic(symbol);
       return response.data;
     },

@@ -14,6 +14,8 @@ pnpm dev
 bun dev
 ```
 
+KanjiGif [https://github.com/KanjiVG/kanjivg]
+
 Radicals [https://yag-ays.github.io/project/kanjivg-radical/]
 
 Mnemonic Monash[http://nihongo.monash.edu/henshall_mnem.html]

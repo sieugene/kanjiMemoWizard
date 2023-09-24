@@ -1,9 +1,12 @@
 import { useFindKanji } from "@/features/kanjiList/hooks/useFindKanji";
+import { Chip, CircularProgress } from "@nextui-org/react";
 import { FC } from "react";
-import { useMnemonic } from "../../hooks/useMnemonic";
-import { CircularProgress } from "@nextui-org/react";
 import styled from "styled-components";
+import { useMnemonic } from "../../hooks/useMnemonic";
 import { useRadicalsTree } from "../../hooks/useRadicalsTree";
+
+import { Hanzi } from "@/entities/HanziWriter";
+import { KanjiSvg } from "@/shared/ui";
 
 type Props = {
   symbol: string;
@@ -12,8 +15,15 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
   const kanji = useFindKanji(symbol);
   const { data: mnemonicData, isLoading } = useMnemonic(symbol);
   const tree = useRadicalsTree(symbol);
+
   return (
-    <div>
+    <Container>
+      <KanjiSvg symbol={symbol} animated />
+      <Hanzi symbol={symbol} />
+
+      <Chip color="default">N{kanji?.jlpt_new}</Chip>
+      <Chip color="default">Strokes {kanji?.strokes}</Chip>
+
       {kanji?.kanji}
       <h2>Mnemonic</h2>
       {isLoading ? (
@@ -51,9 +61,13 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
           </div>
         ))}
       </Tree>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  height: 100vh;
+`;
 
 const Mnemonic = styled.div`
   border: 1px solid white;
