@@ -1,5 +1,6 @@
 import { KanjiDamageScrapper } from "./model/kanji-damage-scrapper";
 import { NihongoMonashScrapper } from "./model/nihongo-monash-scrapper";
+import { RtageScrapper } from "./model/rtega-scrapper";
 
 class SingletonService {
   private static instance: SingletonService;
@@ -20,7 +21,8 @@ class SingletonService {
     const nihongoMonash = await NihongoMonashScrapper.getInstance().scrapData(
       symbol
     );
-    return [kanjiDamage, nihongoMonash];
+    const rtage = await RtageScrapper.getInstance().scrapData(symbol);
+    return [kanjiDamage, nihongoMonash, rtage];
   }
 }
 

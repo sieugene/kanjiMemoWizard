@@ -14,6 +14,8 @@ pnpm dev
 bun dev
 ```
 
+Rtega [https://rtega.be/chmn/index.php]
+
 KanjiGif [https://github.com/KanjiVG/kanjivg]
 
 Radicals [https://yag-ays.github.io/project/kanjivg-radical/]
