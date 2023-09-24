@@ -2,6 +2,7 @@ import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import { FC, useEffect } from "react";
 import { AnimateType, useKanjivgLoad } from "../hooks/useKanjivgLoad";
+import styled from "styled-components";
 
 type Props = {
   symbol: string;
@@ -25,12 +26,32 @@ export const KanjiSvg: FC<Props> = ({
   }, [html, animated]);
 
   return (
-    <div style={{ background: "white", width: "fit-content" }}>
+    <Root>
       {animated && html && <div dangerouslySetInnerHTML={{ __html: html }} />}
       {!animated && kanjiUrl && (
         <Image src={kanjiUrl} width={100} height={100} alt={symbol} />
       )}
       {animateType === "btnClick" && <Button {...buttonProps}>animate</Button>}
-    </div>
+    </Root>
   );
 };
+
+const Root = styled.div`
+  width: fit-content;
+  svg {
+    path {
+      /* stroke: white; */
+    }
+    /* [id="kvg:07406-g1"] {
+      path {
+        stroke: purple;
+      }
+    }
+
+    [id="kvg:07406-g2"] {
+      path {
+        stroke: red;
+      }
+    } */
+  }
+`;

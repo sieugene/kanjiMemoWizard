@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 import { getKanjiUrl } from "../lib/getKanjiUrl";
 import { useMemo, useRef } from "react";
+import { parseElements } from "../lib/parseElements";
 
 export type AnimateType = "svgClick" | "btnClick";
 
@@ -19,6 +20,8 @@ type Options = {
   animateType: AnimateType;
 };
 
+const colors = ["#FF0000", "#00FF00", "#0000FF"];
+
 export const useKanjivgLoad = ({ symbol, animateType }: Options) => {
   const kanjiUrl = useMemo(() => getKanjiUrl(symbol), [symbol]);
   const className = useRef("");
@@ -29,6 +32,15 @@ export const useKanjivgLoad = ({ symbol, animateType }: Options) => {
       const response = await axios.get<string>(kanjiUrl);
       const $ = cheerio.load(response.data);
       const svg = $("svg");
+      // ---
+      const elements = parseElements($);
+
+      Object.values(elements).map((a, index) => {
+        const partElement = $(`[kvg\\:element="${a.main}"]`);
+        const color = colors[index % colors.length] || "white";
+        partElement.find("path").attr("stroke", color);
+      });
+      // -----
       const uniqueClassname = `id-${uuidv4()}-${symbol}`;
 
       className.current = uniqueClassname;
