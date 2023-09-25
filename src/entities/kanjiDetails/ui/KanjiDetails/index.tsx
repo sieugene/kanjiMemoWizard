@@ -51,13 +51,10 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
       <hr />
 
       <Tree>
-        {tree?.map((radical) => (
-          <div key={radical?.element}>
-            <p>{radical?.element}</p>
-            <h1>deep</h1>
-            {radical?.deep?.length
-              ? radical?.deep?.map((e) => <p key={e}>{e}</p>)
-              : "not"}
+        <h1>tree</h1>
+        {tree?.tree?.map((symbol) => (
+          <div key={symbol}>
+            <p>{symbol}</p>
           </div>
         ))}
       </Tree>

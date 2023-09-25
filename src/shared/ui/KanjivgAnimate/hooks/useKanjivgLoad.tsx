@@ -2,11 +2,11 @@ import { useEvent } from "@/shared/hooks";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import KanjivgAnimate from "kanjivganimate";
+import { useMemo, useRef } from "react";
 import useSWR from "swr";
 import { v4 as uuidv4 } from "uuid";
 import { getKanjiUrl } from "../lib/getKanjiUrl";
-import { useMemo, useRef } from "react";
-import { parseElements } from "../lib/parseElements";
+import { parseComponents } from "../lib/parseComponents";
 
 export type AnimateType = "svgClick" | "btnClick";
 
@@ -33,13 +33,15 @@ export const useKanjivgLoad = ({ symbol, animateType }: Options) => {
       const $ = cheerio.load(response.data);
       const svg = $("svg");
       // ---
-      const elements = parseElements($);
-
-      Object.values(elements).map((a, index) => {
-        const partElement = $(`[kvg\\:element="${a.main}"]`);
+      const elements = parseComponents($, symbol);
+      const mainParts = elements[symbol];
+      [symbol, ...mainParts].map((radical, index) => {
+        const partElement = $(`[kvg\\:element="${radical}"]`);
         const color = colors[index % colors.length] || "white";
         partElement.find("path").attr("stroke", color);
       });
+      console.log(JSON.stringify(elements));
+
       // -----
       const uniqueClassname = `id-${uuidv4()}-${symbol}`;
 
