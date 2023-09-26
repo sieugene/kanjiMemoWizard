@@ -10,4 +10,4 @@ export const RADICALS_COMPONENTS = {
 
 export type BASE_PART_KEY = keyof (typeof RADICALS_COMPONENTS)["basePart"];
 export type RADICAL_ELEMENT_KEY =
-  keyof (typeof RADICALS_COMPONENTS)["elements"];
+  keyof (typeof RADICALS_COMPONENTS)["radicals"];

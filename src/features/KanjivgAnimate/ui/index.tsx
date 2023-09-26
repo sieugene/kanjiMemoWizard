@@ -1,8 +1,8 @@
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import { FC, useEffect } from "react";
-import { AnimateType, useKanjivgLoad } from "../hooks/useKanjivgLoad";
 import styled from "styled-components";
+import { AnimateType, useKanjiRender } from "../hooks/useKanjiRender";
 
 type Props = {
   symbol: string;
@@ -14,7 +14,7 @@ export const KanjiSvg: FC<Props> = ({
   animated,
   animateType = "svgClick",
 }) => {
-  const { init, html, kanjiUrl, buttonProps } = useKanjivgLoad({
+  const { init, html, kanjiUrl, buttonProps } = useKanjiRender({
     symbol,
     animateType,
   });
