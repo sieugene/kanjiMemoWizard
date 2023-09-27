@@ -19,6 +19,7 @@ function tree(kanji: string, deep: number, treeData?: KanjiParts) {
 type Props = {
   symbol: string;
 };
+
 export const KanjiTree: FC<Props> = ({ symbol }) => {
   const { tree: treeData } = useRadicalsTree(symbol);
   return (
