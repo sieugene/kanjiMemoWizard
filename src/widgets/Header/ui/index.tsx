@@ -14,8 +14,7 @@ export const Header = () => {
   return (
     <Navbar>
       <NavbarBrand>
-        {/* <AcmeLogo /> */}
-        <p className="font-bold text-inherit">ACME</p>
+        <p className="font-bold text-inherit">簡単漢字</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>

@@ -1,11 +1,12 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import * as iconv from "iconv-lite";
-import { ScrapperData } from "../mnemonic-types";
+import { MnemonicData } from "../mnemonic-types";
 
 export class NihongoMonashScrapper {
   private static instance: NihongoMonashScrapper;
   private service = "http://nihongo.monash.edu/henshall_mnem.html";
+  private serviceName = "nihongo.monash";
 
   private constructor() {}
 
@@ -43,13 +44,14 @@ export class NihongoMonashScrapper {
     return data;
   }
 
-  async scrapData(symbol: string): Promise<ScrapperData> {
+  async scrapData(symbol: string): Promise<MnemonicData> {
     const list = await this.prepare();
     const data = list.find((a) => a.symbol === symbol);
 
     return {
       mnemonic: data?.text || "-",
       source: this.service,
+      service: this.serviceName,
     };
   }
 }

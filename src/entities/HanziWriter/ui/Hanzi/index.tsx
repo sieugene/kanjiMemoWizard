@@ -1,6 +1,7 @@
 import { Button } from "@nextui-org/react";
 import HanziWriter, { HanziWriterOptions } from "hanzi-writer";
 import { FC, useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 
 type Props = {
   symbol: string;
@@ -21,7 +22,6 @@ export const Hanzi: FC<Props> = ({ symbol }) => {
   const writer = useRef<HanziWriter | null>(null);
   useEffect(() => {
     if (!symbol) return;
-    // writer.current =
 
     writer.current = HanziWriter?.create("character-target-div", symbol, {
       ...options,
@@ -52,10 +52,12 @@ export const Hanzi: FC<Props> = ({ symbol }) => {
   return (
     <div>
       <Grid id="character-target-div" mode={mode}></Grid>
-      <Button onClick={() => writer.current?.animateCharacter()}>
-        animate
-      </Button>
-      <Button onClick={quizMode}>quiz</Button>
+      <Actions>
+        <Button onClick={() => writer.current?.animateCharacter()}>
+          animate
+        </Button>
+        <Button onClick={quizMode}>quiz</Button>
+      </Actions>
     </div>
   );
 };
@@ -76,3 +78,9 @@ const Grid = ({ id, mode }: { id: string; mode: "default" | "quiz" }) => {
     </div>
   );
 };
+
+const Actions = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  gap: 14px;
+`;

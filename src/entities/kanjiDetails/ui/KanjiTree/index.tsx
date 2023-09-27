@@ -25,7 +25,7 @@ export const KanjiTree: FC<Props> = ({ symbol }) => {
   return (
     <Root>
       <div>
-        <h2 style={{ color: "black" }}>{symbol}</h2>
+        <h2>{symbol}</h2>
         {treeData && tree(symbol, 0, treeData)}
       </div>
     </Root>
@@ -33,13 +33,12 @@ export const KanjiTree: FC<Props> = ({ symbol }) => {
 };
 
 const Root = styled.div`
-  background: white;
   .tree,
   .tree ul {
     margin: 0 0 0 1em; /* indentation */
     padding: 0;
     list-style: none;
-    color: #369;
+    color: white;
     position: relative;
   }
 
@@ -80,7 +79,8 @@ const Root = styled.div`
   }
 
   .tree li:last-child:before {
-    background: white; /* same with body background */
+    // TODO take from ui
+    background: #18181b; /* same with body background */
     height: auto;
     top: 1em; /* (line-height/2) */
     bottom: 0;

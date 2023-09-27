@@ -14,9 +14,10 @@ type BtnArgs = {
 type Options = {
   symbol: string;
   animateType: AnimateType;
+  colorize?: boolean;
 };
 
-export const useKanjiRender = ({ symbol, animateType }: Options) => {
+export const useKanjiRender = ({ symbol, animateType, colorize }: Options) => {
   const className = useRef("");
   const btnArgs = useRef<BtnArgs | null>(null);
   const kanjiSvg = useKanjiSvgData(symbol, animateType);
@@ -24,7 +25,7 @@ export const useKanjiRender = ({ symbol, animateType }: Options) => {
   const { data } = useSWR(
     !!kanjiSvg?.data && `kanji-image-attach/${symbol}`,
     async () => {
-      const result = kanjiSvg.data!!.attach();
+      const result = kanjiSvg.data!!.attach(colorize);
       className.current = result.className;
       btnArgs.current = result.buttonArguments;
       return result.html;

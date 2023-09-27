@@ -1,9 +1,10 @@
 import { MnemonicService } from "./mnemonic-service";
-export type GetMnemonicResponse = ReturnType<
-  (typeof MnemonicService)["scrapMnemonic"]
+export type GetMnemonicsResponse = Awaited<
+  ReturnType<(typeof MnemonicService)["getMnemonics"]>
 >;
 
-export type ScrapperData = {
+export type MnemonicData = {
   mnemonic: string;
   source: string;
+  service: string;
 };

@@ -1,10 +1,11 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import { ScrapperData } from "../mnemonic-types";
+import { MnemonicData } from "../mnemonic-types";
 
 export class KanjiDamageScrapper {
   private static instance: KanjiDamageScrapper;
   private service = "http://www.kanjidamage.com";
+  private serviceName = "kanjidamage";
 
   private constructor() {}
 
@@ -31,7 +32,7 @@ export class KanjiDamageScrapper {
     return mappedURL;
   }
 
-  async scrapData(symbol: string): Promise<ScrapperData> {
+  async scrapData(symbol: string): Promise<MnemonicData> {
     const list = await this.prepare();
     const linkData = list.find((l) => l.kanji === symbol);
     if (!linkData) {
@@ -45,6 +46,7 @@ export class KanjiDamageScrapper {
     return {
       mnemonic: mnemonicHeader?.next?.("table")?.find?.("p")?.text(),
       source,
+      service: this.serviceName,
     };
   }
 }

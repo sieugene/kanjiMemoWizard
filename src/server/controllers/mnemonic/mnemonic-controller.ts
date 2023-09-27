@@ -4,7 +4,7 @@ import { RestMethod } from "@/server/guards/methodGuard";
 import { GetMnemonicQueryArgs, GetMnemonicSchema } from "./mnemonic-schema";
 import { MnemonicService } from "./mnemonic-service";
 import { NextApiResponse } from "next";
-import { GetMnemonicResponse } from "./mnemonic-types";
+import { GetMnemonicsResponse } from "./mnemonic-types";
 
 export class MnemonicContoller {
   constructor(private readonly service = MnemonicService) {}
@@ -13,12 +13,12 @@ export class MnemonicContoller {
       ValidatorGuard(
         async (
           request,
-          res: NextApiResponse<GetMnemonicResponse | { error: string }>
+          res: NextApiResponse<GetMnemonicsResponse | { error: string }>
         ) => {
           try {
             const body = request.query as any as GetMnemonicQueryArgs;
-            const data = await this.service.scrapMnemonic(body.symbol);
-            res.json(data as any);
+            const data = await this.service.getMnemonics(body.symbol);
+            res.json(data);
           } catch (error: any) {
             console.log(error);
             res.status(400).json({

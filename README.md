@@ -14,6 +14,8 @@ pnpm dev
 bun dev
 ```
 
+NihongoShark [https://ankiweb.net/shared/info/1956010956]
+
 Rtega [https://rtega.be/chmn/index.php]
 
 KanjiGif [https://github.com/KanjiVG/kanjivg]

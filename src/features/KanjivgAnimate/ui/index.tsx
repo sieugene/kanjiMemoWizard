@@ -1,22 +1,25 @@
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import { FC, useEffect } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { AnimateType, useKanjiRender } from "../hooks/useKanjiRender";
 
 type Props = {
   symbol: string;
   animated?: boolean;
   animateType?: AnimateType;
+  colorize?: boolean;
 };
 export const KanjiSvg: FC<Props> = ({
   symbol,
   animated,
   animateType = "svgClick",
+  colorize = false,
 }) => {
   const { init, html, kanjiUrl, buttonProps } = useKanjiRender({
     symbol,
     animateType,
+    colorize,
   });
 
   useEffect(() => {
@@ -27,7 +30,12 @@ export const KanjiSvg: FC<Props> = ({
 
   return (
     <Root>
-      {animated && html && <div dangerouslySetInnerHTML={{ __html: html }} />}
+      {animated && html && (
+        <HtmlSvg
+          dangerouslySetInnerHTML={{ __html: html }}
+          animateType={animateType}
+        />
+      )}
       {!animated && kanjiUrl && (
         <Image src={kanjiUrl} width={100} height={100} alt={symbol} />
       )}
@@ -38,20 +46,12 @@ export const KanjiSvg: FC<Props> = ({
 
 const Root = styled.div`
   width: fit-content;
-  svg {
-    path {
-      /* stroke: white; */
-    }
-    /* [id="kvg:07406-g1"] {
-      path {
-        stroke: purple;
-      }
-    }
+`;
 
-    [id="kvg:07406-g2"] {
-      path {
-        stroke: red;
-      }
-    } */
-  }
+const HtmlSvg = styled.div<Pick<Props, "animateType">>`
+  ${(props) =>
+    props?.animateType === "svgClick" &&
+    css`
+      cursor: pointer;
+    `}
 `;

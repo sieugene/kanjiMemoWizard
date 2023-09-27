@@ -1,21 +1,22 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import { ScrapperData } from "../mnemonic-types";
+import { MnemonicData } from "../mnemonic-types";
 
-export class RtageScrapper {
-  private static instance: RtageScrapper;
+export class RtegaScrapper {
+  private static instance: RtegaScrapper;
   private service = "https://rtega.be/chmn/index.php?c=";
+  private serviceName = "Rtega";
 
   private constructor() {}
 
-  public static getInstance(): RtageScrapper {
-    if (!RtageScrapper.instance) {
-      RtageScrapper.instance = new RtageScrapper();
+  public static getInstance(): RtegaScrapper {
+    if (!RtegaScrapper.instance) {
+      RtegaScrapper.instance = new RtegaScrapper();
     }
-    return RtageScrapper.instance;
+    return RtegaScrapper.instance;
   }
 
-  async scrapData(symbol: string): Promise<ScrapperData> {
+  async scrapData(symbol: string): Promise<MnemonicData> {
     const source = `${this.service}${symbol}`;
     const response = await axios.get(source);
     const html = response.data;
@@ -29,11 +30,12 @@ export class RtageScrapper {
       .map((index, element) => $(element).text())
       .get();
 
-    const combinedText = liTextArray.join(";------;");
+    const combinedText = liTextArray.join("\n");
 
     return {
       mnemonic: combinedText,
       source,
+      service: this.serviceName,
     };
   }
 }

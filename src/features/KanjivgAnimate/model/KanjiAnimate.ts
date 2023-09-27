@@ -33,11 +33,13 @@ export class KanjiAnimate {
     return this.$root;
   }
 
-  public attach() {
+  public attach(colorize?: boolean) {
     this.isInstalled();
 
     const svg = this.$root?.("svg");
-    this.colorizeParts(svg);
+    if (colorize) {
+      this.colorizeParts(svg);
+    }
     this.setClassName(`id-${uuidv4()}-${this.symbol}`);
 
     svg?.attr("class", this.className);
