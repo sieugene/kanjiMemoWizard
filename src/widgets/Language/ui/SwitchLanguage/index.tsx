@@ -19,7 +19,10 @@ export const SwitchLanguage = () => {
   );
 };
 
-const Switch = styled.div``;
+const Switch = styled.div`
+  display: flex;
+  gap: 5px;
+`;
 
 const Option = styled(Button)`
   cursor: pointer;

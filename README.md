@@ -14,6 +14,8 @@ pnpm dev
 bun dev
 ```
 
+Tatoeba (Sentences) [https://tatoeba.org]
+
 NihongoShark [https://ankiweb.net/shared/info/1956010956]
 
 Rtega [https://rtega.be/chmn/index.php]
