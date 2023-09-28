@@ -55,3 +55,5 @@ export const useKanjiRender = ({ symbol, animateType, colorize }: Options) => {
     buttonProps: animateType === "btnClick" ? btnArgs.current : {},
   };
 };
+
+export type UseKanjiRenderT = ReturnType<typeof useKanjiRender>;

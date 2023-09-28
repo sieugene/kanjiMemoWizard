@@ -28,7 +28,12 @@ function extractData(
         $root(childElement).attr("kvg:original");
       if (childId && parentElementId) {
         const prevData = resultData[parentElementId] || [];
-        resultData[parentElementId] = [...prevData, childId].filter(onlyUnique);
+        if (childId !== parentElementId) {
+          resultData[parentElementId] = [...prevData, childId].filter(
+            onlyUnique
+          );
+        }
+
         extractData($root(childElement), $root, childId, resultData);
       }
     })

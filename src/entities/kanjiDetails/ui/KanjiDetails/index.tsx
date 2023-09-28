@@ -8,6 +8,7 @@ import { KanjiTree } from "../KanjiTree";
 import { KanjiMnemonic } from "../KanjiMnemonic";
 import { Hanzi } from "@/entities/HanziWriter";
 import { KanjiSentences } from "../KanjiSentences";
+import { KanjiSteps } from "@/entities/KanjiSteps/ui";
 
 type Props = {
   symbol: string;
@@ -17,42 +18,53 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
 
   return (
     <Container>
-      <Card className="py-4">
-        <CardHeader>
-          <DetailsHeader>
-            <Chip color="warning" variant="bordered">
-              N{kanji?.jlpt_new}
-            </Chip>
-            <Chip color="warning" variant="bordered">
-              <h2>Stroke : {kanji?.strokes}</h2>
-            </Chip>
-          </DetailsHeader>
-        </CardHeader>
-        <CardBody className="overflow-visible py-2">
-          <BaseDetails>
-            <KanjiSvg symbol={symbol} animated colorize />
-            <Readings>
-              <div className="details">
-                <h2>ON: {kanji?.readings_on.map((a) => a)}</h2>
-                <h2>KUN: {kanji?.readings_kun.map((a) => a)}</h2>
-              </div>
-            </Readings>
-            <div className="parts">
-              <h2> Parts: </h2>
-              {kanji?.radicals.map((a, index) => (
-                <p key={index}>{a}</p>
-              ))}
-            </div>
-          </BaseDetails>
-
-          <Meanings>
-            <Chip variant="bordered">
-              Meanings: {kanji?.meanings?.map((a) => ` ${a} ,`)}
-            </Chip>
-          </Meanings>
-        </CardBody>
-      </Card>
-      <KanjiMnemonic symbol={symbol} />
+      <Split>
+        <Card className="py-4">
+          <CardHeader>
+            <DetailsHeader>
+              <Chip variant="bordered">N{kanji?.jlpt_new}</Chip>
+              <Chip variant="bordered">
+                <h2>Stroke : {kanji?.strokes}</h2>
+              </Chip>
+            </DetailsHeader>
+          </CardHeader>
+          <CardBody className="overflow-visible py-2">
+            <BaseDetails>
+              <KanjiSvg symbol={symbol} animated colorize />
+              <Meanings>
+                <b>Meanings:</b>
+                <p>
+                  {kanji?.meanings?.map((a, index) => {
+                    const prefix =
+                      kanji.meanings.length === index + 1 ? "" : ",";
+                    return ` ${a} ${prefix}`;
+                  })}
+                </p>
+              </Meanings>
+              <Readings>
+                <div className="details">
+                  <b>ON: </b>
+                  <p>{kanji?.readings_on.map((a) => a)}</p>
+                  <b>KUN: </b>
+                  <p>{kanji?.readings_kun.map((a) => a)}</p>
+                </div>
+              </Readings>
+              <Parts>
+                <h2> Parts: </h2>
+                {kanji?.radicals.map((a, index) => (
+                  <p key={index}>{a}</p>
+                ))}
+              </Parts>
+            </BaseDetails>
+            <Steps>
+              <KanjiSteps symbol={symbol} />
+            </Steps>
+          </CardBody>
+        </Card>
+        <Mnemonics>
+          <KanjiMnemonic symbol={symbol} />
+        </Mnemonics>
+      </Split>
 
       <Card>
         <CardBody>
@@ -84,6 +96,11 @@ const Container = styled.div`
   padding-bottom: 2rem;
 `;
 
+const Split = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
 const DetailsHeader = styled.div`
   display: flex;
   gap: 0.5rem;
@@ -93,8 +110,18 @@ const BaseDetails = styled.div`
   display: flex;
   gap: 1rem;
 `;
+const Steps = styled.div`
+  margin-top: 1rem;
+`;
+
 const Readings = styled.div``;
+const Parts = styled.div``;
 
 const Meanings = styled.div`
-  margin-top: 1rem;
+  max-width: 170px;
+`;
+
+const Mnemonics = styled.div`
+  min-width: 40%;
+  max-width: 40%;
 `;

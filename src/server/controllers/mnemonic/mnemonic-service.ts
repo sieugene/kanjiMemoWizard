@@ -16,15 +16,17 @@ class SingletonService {
   }
   // TODO node cache
   async getMnemonics(symbol: string) {
-    const kanjiDamage = await KanjiDamageScrapper.getInstance().scrapData(
-      symbol
-    );
-    const nihongoMonash = await NihongoMonashScrapper.getInstance().scrapData(
-      symbol
-    );
-    const rtega = await RtegaScrapper.getInstance().scrapData(symbol);
+    const kanjiDamage = await KanjiDamageScrapper.getInstance()
+      .scrapData(symbol)
+      .catch(() => null);
+    const nihongoMonash = await NihongoMonashScrapper.getInstance()
+      .scrapData(symbol)
+      .catch(() => null);
+    const rtega = await RtegaScrapper.getInstance()
+      .scrapData(symbol)
+      .catch(() => null);
     const nihongoShark = NihongoSharkDataService.getInstance().findData(symbol);
-    return [kanjiDamage, nihongoMonash, rtega, nihongoShark];
+    return [kanjiDamage, nihongoMonash, rtega, nihongoShark].filter((a) => !!a);
   }
 }
 

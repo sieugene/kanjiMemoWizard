@@ -1,4 +1,12 @@
-import { Card, CardBody, CircularProgress, Tab, Tabs } from "@nextui-org/react";
+import {
+  Card,
+  CardBody,
+  CircularProgress,
+  ScrollShadow,
+  Snippet,
+  Tab,
+  Tabs,
+} from "@nextui-org/react";
 import { useMnemonic } from "../../hooks/useMnemonic";
 import { FC } from "react";
 import styled from "styled-components";
@@ -10,31 +18,60 @@ export const KanjiMnemonic: FC<Props> = ({ symbol }) => {
   const { data: mnemonicData, isLoading } = useMnemonic(symbol);
 
   return (
-    <Root className="flex w-full flex-col">
+    <Root>
       {isLoading ? (
         <CircularProgress aria-label="Loading..." />
       ) : (
-        <Tabs aria-label="Mnemonics">
-          {mnemonicData?.map((data) => (
-            <Tab key={data.service} title={data.service}>
-              <Card>
-                <CardBody>
-                  <h3>
-                    <a href={data.source}>Source link</a>
-                  </h3>
-                  <Text>{data.mnemonic}</Text>
-                </CardBody>
-              </Card>
-            </Tab>
-          ))}
-        </Tabs>
+        <Content>
+          <Tabs aria-label="Mnemonics" style={{ display: "block" }}>
+            {mnemonicData?.map((data) => (
+              <Tab key={data?.service} title={data?.service}>
+                <Card>
+                  <CardBody>
+                    <ScrollShadow>
+                      <ScrollBody>
+                        <h3>
+                          <a href={data?.source}>Source link</a>
+                        </h3>
+                        <Snippet symbol="" variant="bordered">
+                          <Text>{data?.mnemonic}</Text>
+                        </Snippet>
+                      </ScrollBody>
+                    </ScrollShadow>
+                  </CardBody>
+                </Card>
+              </Tab>
+            ))}
+          </Tabs>
+        </Content>
       )}
     </Root>
   );
 };
 
-const Root = styled.div``;
+const Root = styled.div`
+  height: 100%;
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  & > div:nth-child(2) {
+    padding: 0;
+    padding-top: 1rem;
+    height: inherit;
+    & > div:nth-child(1) {
+      height: inherit;
+    }
+  }
+  height: 100%;
+`;
 
 const Text = styled.p`
   white-space: pre-wrap;
+`;
+
+const ScrollBody = styled.div`
+  height: 250px;
 `;
