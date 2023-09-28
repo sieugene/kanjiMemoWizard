@@ -19,7 +19,7 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
   return (
     <Container>
       <Split>
-        <Card className="py-4">
+        <MainInfo className="py-4">
           <CardHeader>
             <DetailsHeader>
               <Chip variant="bordered">N{kanji?.jlpt_new}</Chip>
@@ -60,7 +60,7 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
               <KanjiSteps symbol={symbol} />
             </Steps>
           </CardBody>
-        </Card>
+        </MainInfo>
         <Mnemonics>
           <KanjiMnemonic symbol={symbol} />
         </Mnemonics>
@@ -121,7 +121,12 @@ const Meanings = styled.div`
   max-width: 170px;
 `;
 
+const MainInfo = styled(Card)`
+  min-width: 45%;
+  max-width: 60%;
+`;
+
 const Mnemonics = styled.div`
-  min-width: 40%;
-  max-width: 40%;
+  width: 100%;
+  /* max-width: 40%; */
 `;

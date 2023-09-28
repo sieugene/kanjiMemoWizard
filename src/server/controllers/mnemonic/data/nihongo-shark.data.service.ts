@@ -19,9 +19,9 @@ export class NihongoSharkDataService {
     const data = this.nihongoShark.find((a) => a.kanji === symbol);
     const mnemonic = `heisigStory: ${
       data?.heisigStory || "-"
-    }\nheisigComment: ${data?.heisigComment || "-"}\nkoohiiStory1: ${
+    }\n\nheisigComment: ${data?.heisigComment || "-"}\n\nkoohiiStory1: ${
       data?.koohiiStory1 || "-"
-    }\nkoohiiStory2: ${data?.koohiiStory2 || "-"}\n`;
+    }\n\nkoohiiStory2: ${data?.koohiiStory2 || "-"}\n`;
     return {
       source: "https://ankiweb.net/shared/info/1956010956",
       mnemonic,

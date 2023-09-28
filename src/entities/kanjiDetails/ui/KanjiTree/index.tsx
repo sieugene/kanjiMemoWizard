@@ -61,9 +61,8 @@ const Root = styled.div`
   .tree li {
     margin: 0;
     padding: 0 1.5em; /* indentation + .5em */
-    line-height: 2em;
-    font-weight: bold;
     position: relative;
+    font-size: 1rem;
   }
 
   .tree li:before {
