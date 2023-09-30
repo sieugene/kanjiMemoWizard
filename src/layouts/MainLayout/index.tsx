@@ -1,10 +1,13 @@
 import { Header } from "@/widgets/Header";
 import React, { FC } from "react";
-import styled, { css } from "styled-components";
+import styled, { css, useTheme } from "styled-components";
 
 export const MainLayout: FC<{ children: React.ReactNode }> = ({ children }) => {
+  const theme = useTheme();
   return (
-    <main className="dark text-foreground bg-background">
+    <main
+      className={`dark text-foreground bg-background ${theme.fonts.base.config.variable}`}
+    >
       <Header />
       <Container>{children}</Container>
     </main>

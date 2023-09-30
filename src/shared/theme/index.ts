@@ -1,3 +1,5 @@
+import { FONTS_CONFIG } from "./fonts";
+
 const breakpointsValues = {
   sm: 640,
   md: 768,
@@ -12,6 +14,9 @@ export const theme = {
   colors: {
     primary: "#111",
     secondary: "#0070f3",
+  },
+  fonts: {
+    base: FONTS_CONFIG.inter,
   },
   breakpoints: {
     values: breakpointsValues,

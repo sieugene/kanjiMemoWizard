@@ -51,7 +51,7 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
               </Readings>
               <Parts>
                 <h2> Parts: </h2>
-                {kanji?.radicals.map((a, index) => (
+                {kanji?.radicals?.map((a, index) => (
                   <p key={index}>{a}</p>
                 ))}
               </Parts>
