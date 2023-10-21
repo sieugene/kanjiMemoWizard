@@ -38,7 +38,10 @@ const config: TailwindConfig = {
     },
   },
   darkMode: "class",
-  plugins: [nextui()],
+  plugins: [nextui({
+    defaultTheme: "dark", 
+    defaultExtendTheme: "dark",
+  })],
 };
 
 export default config;

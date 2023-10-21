@@ -1,5 +1,6 @@
 import React from "react";
 
+import { KanjiSearch } from "@/features/kanjiSearch/ui";
 import { ROUTES } from "@/shared/routes";
 import { SwitchLanguage } from "@/widgets/Language";
 import {
@@ -13,6 +14,7 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import NextLink from "next/link";
+import styled from "styled-components";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -66,18 +68,14 @@ export const Header = () => {
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
+      <NavbarItems justify="end">
+        <NavbarItem>
+          <KanjiSearch />
         </NavbarItem>
         <NavbarItem>
           <SwitchLanguage />
-          {/* <Button as={Link} color="primary" href="#" variant="flat">
-        
-            Sign Up
-          </Button> */}
         </NavbarItem>
-      </NavbarContent>
+      </NavbarItems>
       <NavbarMenu style={{ background: "#000000a8" }}>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
@@ -101,3 +99,5 @@ export const Header = () => {
     </Navbar>
   );
 };
+
+const NavbarItems = styled(NavbarContent)``;

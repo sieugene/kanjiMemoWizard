@@ -1,6 +1,7 @@
 import { Kanji } from "@/shared/data";
 import { ROUTES } from "@/shared/routes";
 import { Card, CardFooter } from "@nextui-org/react";
+import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
 
@@ -11,7 +12,7 @@ type Props = {
 export const KanjiItem = React.memo(({ kanji }: Props) => {
   const symbolKanji = kanji?.kanji;
   return (
-    <a href={ROUTES.kanji(kanji.kanji)}>
+    <Link href={ROUTES.kanji(kanji.kanji)}>
       <CardItem isFooterBlurred radius="lg" className="border-none">
         <Text> {symbolKanji}</Text>
         <Footer className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
@@ -30,7 +31,7 @@ export const KanjiItem = React.memo(({ kanji }: Props) => {
           </div>
         </Footer>
       </CardItem>
-    </a>
+    </Link>
   );
 });
 
