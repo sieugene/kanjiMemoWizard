@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { WriteGrid } from "@/shared/ui";
 import { Button } from "@nextui-org/react";
 import HanziWriter, { HanziWriterOptions } from "hanzi-writer";
@@ -51,25 +52,30 @@ export const Hanzi: FC<Props> = ({ symbol }) => {
   };
 
   return (
-    <div>
-      <Grid id="character-target-div" mode={mode}></Grid>
+    <Root>
+      <Grid>
+        <WriteGrid className="write" />
+      </Grid>
+      <div
+        id="character-target-div"
+        style={{ zIndex: 1, position: "relative" }}
+      />
       <Actions>
-        <Button onClick={() => writer.current?.animateCharacter()}>
-          animate
-        </Button>
         <Button onClick={quizMode}>quiz</Button>
       </Actions>
-    </div>
+    </Root>
   );
 };
 
-const Grid = ({ id, mode }: { id: string; mode: "default" | "quiz" }) => {
-  return (
-    <div style={{ background: "white", width: "fit-content" }} id={id}>
-      {mode === "quiz" && <WriteGrid />}
-    </div>
-  );
-};
+const Root = styled.div``;
+
+const Grid = styled.div`
+  background: white;
+  width: 100px;
+  height: 100px;
+  z-index: 0;
+  position: absolute;
+`;
 
 const Actions = styled.div`
   margin-top: 1rem;

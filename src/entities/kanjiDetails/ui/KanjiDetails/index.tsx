@@ -89,6 +89,8 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
         </CardBody>
       </Card>
 
+      <h2>Try writing</h2>
+
       <Card>
         <CardBody>
           <Hanzi symbol={symbol} />
