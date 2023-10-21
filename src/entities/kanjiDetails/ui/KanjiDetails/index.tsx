@@ -1,14 +1,14 @@
 import { useFindKanji } from "@/features/kanjiList/hooks/useFindKanji";
 import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react";
 import { FC } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import { KanjiSvg } from "@/features/KanjivgAnimate";
-import { KanjiTree } from "../KanjiTree";
-import { KanjiMnemonic } from "../KanjiMnemonic";
 import { Hanzi } from "@/entities/HanziWriter";
-import { KanjiSentences } from "../KanjiSentences";
 import { KanjiSteps } from "@/entities/KanjiSteps/ui";
+import { KanjiSvg } from "@/features/KanjivgAnimate";
+import { KanjiMnemonic } from "../KanjiMnemonic";
+import { KanjiSentences } from "../KanjiSentences";
+import { KanjiTree } from "../KanjiTree";
 
 type Props = {
   symbol: string;
@@ -19,58 +19,69 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
   return (
     <Container>
       <Split>
-        <MainInfo className="py-4">
-          <CardHeader>
-            <DetailsHeader>
-              <Chip variant="bordered">N{kanji?.jlpt_new}</Chip>
-              <Chip variant="bordered">
-                <h2>Stroke : {kanji?.strokes}</h2>
-              </Chip>
-            </DetailsHeader>
-          </CardHeader>
-          <CardBody className="overflow-visible py-2">
-            <BaseDetails>
-              <KanjiSvg symbol={symbol} animated colorize />
-              <Meanings>
-                <b>Meanings:</b>
-                <p>
-                  {kanji?.meanings?.map((a, index) => {
-                    const prefix =
-                      kanji.meanings.length === index + 1 ? "" : ",";
-                    return ` ${a} ${prefix}`;
-                  })}
-                </p>
-              </Meanings>
-              <Readings>
-                <div className="details">
-                  <b>ON: </b>
-                  <p>{kanji?.readings_on.map((a) => a)}</p>
-                  <b>KUN: </b>
-                  <p>{kanji?.readings_kun.map((a) => a)}</p>
-                </div>
-              </Readings>
-              <Parts>
-                <h2> Parts: </h2>
-                {kanji?.radicals?.map((a, index) => (
-                  <p key={index}>{a}</p>
-                ))}
-              </Parts>
-            </BaseDetails>
-            <Steps>
-              <KanjiSteps symbol={symbol} />
-            </Steps>
-          </CardBody>
+        <MainInfo>
+          <h2>Base Info</h2>
+          <Card style={{ height: "100%" }}>
+            <CardHeader>
+              <DetailsHeader>
+                <Chip variant="bordered">N{kanji?.jlpt_new}</Chip>
+                <Chip variant="bordered">
+                  <h2>Stroke : {kanji?.strokes}</h2>
+                </Chip>
+              </DetailsHeader>
+            </CardHeader>
+            <CardBody
+              className="overflow-visible py-2"
+              style={{ height: "100%" }}
+            >
+              <BaseDetails>
+                <KanjiSvg symbol={symbol} animated colorize />
+                <Meanings>
+                  <b>Meanings:</b>
+                  <p>
+                    {kanji?.meanings?.map((a, index) => {
+                      const prefix =
+                        kanji.meanings.length === index + 1 ? "" : ",";
+                      return ` ${a} ${prefix}`;
+                    })}
+                  </p>
+                </Meanings>
+                <Readings>
+                  <div className="details">
+                    <h3>ON: </h3>
+                    <p>{kanji?.readings_on.map((a) => a)}</p>
+                    <h3>KUN: </h3>
+                    <p>{kanji?.readings_kun.map((a) => a)}</p>
+                  </div>
+                </Readings>
+                <Parts>
+                  <h2> Parts: </h2>
+                  {kanji?.radicals?.map((a, index) => (
+                    <p key={index}>{a}</p>
+                  ))}
+                </Parts>
+              </BaseDetails>
+              <Steps>
+                <KanjiSteps symbol={symbol} />
+              </Steps>
+            </CardBody>
+          </Card>
         </MainInfo>
+
         <Mnemonics>
+          <h2>Mnemonics</h2>
           <KanjiMnemonic symbol={symbol} />
         </Mnemonics>
       </Split>
 
+      <h2>Kanji Tree</h2>
       <Card>
         <CardBody>
           <KanjiTree symbol={symbol} />
         </CardBody>
       </Card>
+
+      <h2>Sentences</h2>
 
       <Card>
         <CardBody>
@@ -99,6 +110,11 @@ const Container = styled.div`
 const Split = styled.div`
   display: flex;
   gap: 1rem;
+  ${({ theme }) => css`
+    ${theme.breakpoints.lessThan("xl")} {
+      flex-direction: column;
+    }
+  `}
 `;
 
 const DetailsHeader = styled.div`
@@ -114,19 +130,30 @@ const Steps = styled.div`
   margin-top: 1rem;
 `;
 
-const Readings = styled.div``;
+const Readings = styled.div`
+  .details {
+    h3 {
+      margin-bottom: 5px;
+    }
+  }
+`;
 const Parts = styled.div``;
 
 const Meanings = styled.div`
   max-width: 170px;
 `;
 
-const MainInfo = styled(Card)`
+const MainInfo = styled.div`
   min-width: 45%;
   max-width: 60%;
+  ${({ theme }) => css`
+    ${theme.breakpoints.lessThan("xl")} {
+      max-width: 100%;
+      width: 100%;
+    }
+  `}
 `;
 
 const Mnemonics = styled.div`
   width: 100%;
-  /* max-width: 40%; */
 `;

@@ -60,7 +60,7 @@ const Root = styled.div`
 
   .tree li {
     margin: 0;
-    padding: 0 1.5em; /* indentation + .5em */
+    padding: 6px 1.5em; /* indentation + .5em */
     position: relative;
     font-size: 1rem;
   }

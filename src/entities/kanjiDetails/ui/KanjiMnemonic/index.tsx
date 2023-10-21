@@ -30,7 +30,7 @@ export const KanjiMnemonic: FC<Props> = ({ symbol }) => {
                   <CardBody>
                     <ScrollShadow>
                       <ScrollBody>
-                        <h3>
+                        <h3 style={{ marginBottom: 10 }}>
                           <a href={data?.source}>Source link</a>
                         </h3>
                         <Snippet symbol="" variant="bordered">

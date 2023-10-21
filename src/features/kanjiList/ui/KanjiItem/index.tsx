@@ -15,7 +15,7 @@ export const KanjiItem = React.memo(({ kanji }: Props) => {
       <CardItem isFooterBlurred radius="lg" className="border-none">
         <Text> {symbolKanji}</Text>
         <Footer className="justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-          <div>
+          <Reading>
             {kanji?.readings_on?.slice(0, 2).map((reading) => (
               <p
                 key={`${symbolKanji}-${reading}`}
@@ -24,7 +24,7 @@ export const KanjiItem = React.memo(({ kanji }: Props) => {
                 {reading}
               </p>
             ))}
-          </div>
+          </Reading>
           <div>
             <p>{kanji?.meanings[0]}</p>
           </div>
@@ -44,6 +44,7 @@ const CardItem = styled(Card)`
   z-index: 1;
   display: flex;
   flex-wrap: wrap;
+  height: 100%;
 `;
 
 const Footer = styled(CardFooter)`
@@ -52,6 +53,15 @@ const Footer = styled(CardFooter)`
   padding: 10px;
   width: 100%;
   justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+`;
+
+const Reading = styled.div`
+  p {
+    font-weight: 300;
+    color: #9b9b9b;
+  }
 `;
 
 const Text = styled.p`
