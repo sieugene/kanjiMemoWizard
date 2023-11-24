@@ -1,0 +1,1 @@
+export { KanjiConverter } from "./KanjiConverter";

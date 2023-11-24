@@ -2,7 +2,7 @@ import { useFindKanji } from "@/features/kanjiList/hooks/useFindKanji";
 import { Card, CardBody, CardHeader, Chip } from "@nextui-org/react";
 import { FC } from "react";
 import styled, { css } from "styled-components";
-
+import { useTranslation } from "next-i18next";
 import { Hanzi } from "@/entities/HanziWriter";
 import { KanjiSteps } from "@/entities/KanjiSteps/ui";
 import { KanjiSvg } from "@/features/KanjivgAnimate";
@@ -14,6 +14,7 @@ type Props = {
   symbol: string;
 };
 export const KanjiDetails: FC<Props> = ({ symbol }) => {
+  const { t } = useTranslation();
   const kanji = useFindKanji(symbol);
 
   return (
@@ -48,14 +49,14 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
                 </Meanings>
                 <Readings>
                   <div className="details">
-                    <h3>ON: </h3>
+                    <h3>{t("ON:")} </h3>
                     <p>{kanji?.readings_on.map((a) => a)}</p>
-                    <h3>KUN: </h3>
+                    <h3>{t("KUN:")} </h3>
                     <p>{kanji?.readings_kun.map((a) => a)}</p>
                   </div>
                 </Readings>
                 <Parts>
-                  <h2> Parts: </h2>
+                  <h2> {t("Parts:")} </h2>
                   {kanji?.radicals?.map((a, index) => (
                     <p key={index}>{a}</p>
                   ))}
@@ -69,19 +70,19 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
         </MainInfo>
 
         <Mnemonics>
-          <h2>Mnemonics</h2>
+          <h2>{t("Mnemonics")}</h2>
           <KanjiMnemonic symbol={symbol} />
         </Mnemonics>
       </Split>
 
-      <h2>Kanji Tree</h2>
+      <h2>{t("Kanji Tree")}</h2>
       <Card>
         <CardBody>
           <KanjiTree symbol={symbol} />
         </CardBody>
       </Card>
 
-      <h2>Sentences</h2>
+      <h2>{t("Sentences")}</h2>
 
       <Card>
         <CardBody>
@@ -89,7 +90,7 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
         </CardBody>
       </Card>
 
-      <h2>Try writing</h2>
+      <h2>{t("Try writing")}</h2>
 
       <Card>
         <CardBody>

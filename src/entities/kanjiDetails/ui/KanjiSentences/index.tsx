@@ -3,6 +3,7 @@ import { useKanjiSentences } from "../../hooks/useKanjiSentences";
 import { CircularProgress, ScrollShadow } from "@nextui-org/react";
 import styled from "styled-components";
 import ReactCountryFlag from "react-country-flag";
+import { KanjiConverter } from "@/entities/KanjiConverter/ui";
 
 type Props = {
   symbol: string;
@@ -27,7 +28,12 @@ export const KanjiSentences: FC<Props> = ({ symbol }) => {
                         fontSize: "2em",
                       }}
                     />
-                    <h2>{info.sentence}</h2>
+
+                    <KanjiConverter
+                      text={info.sentence}
+                      showFurigana
+                      asElement={<h2 />}
+                    />
                   </Item>
                   <Item>
                     <ReactCountryFlag
