@@ -1,24 +1,60 @@
+import { Kanji } from "@/shared/data";
+import { FC, ReactNode } from "react";
+import { FixedSizeGrid, GridChildComponentProps } from "react-window";
 import styled, { css } from "styled-components";
+import { useGridSizes } from "../../hooks/useGridSizes";
 import { useKanjiList } from "../../hooks/useKanjiList";
+import { createGridFromArray } from "../../lib/createGridFromArray";
 import { sortByLevel } from "../../lib/sortByLevel";
 import { KanjiItem } from "../KanjiItem";
 
+const Cell: FC<
+  GridChildComponentProps<Kanji[][]> & { children: ReactNode }
+> = ({ columnIndex, rowIndex, style, data }) => {
+  const kanjiData = data[rowIndex][columnIndex];
+  const _id = `${rowIndex}-${columnIndex}-${kanjiData?.kanji}`;
+  if (!kanjiData) return null;
+
+  return (
+    <div
+      key={_id}
+      style={{
+        ...style,
+      }}
+    >
+      <KanjiItem kanji={kanjiData} />
+    </div>
+  );
+};
+
 export const KanjiList = () => {
   const list = useKanjiList();
-
   const kanjiByGrades = sortByLevel(list);
+  const { listWidth, columnCount, columnWidth } = useGridSizes(160, 6, 2);
 
   return (
     <Root>
       <Head></Head>
       {kanjiByGrades.map((info) => {
+        const dataList = createGridFromArray(info.list, columnCount);
+        const rowCount = dataList.length;
+
         return (
-          <Level key={info.level}>
+          <Level key={`${info.level}-${columnCount}`}>
             <h3>JLPT N{info.level}</h3>
             <List>
-              {info.list.map((item) => (
-                <KanjiItem key={item?.kanji} kanji={item} />
-              ))}
+              <FixedSizeGrid
+                columnCount={columnCount}
+                columnWidth={columnWidth}
+                height={500}
+                rowCount={rowCount}
+                rowHeight={200}
+                width={listWidth}
+                itemData={dataList}
+              >
+                {/* difference react version */}
+                {Cell as any}
+              </FixedSizeGrid>
             </List>
           </Level>
         );
@@ -27,7 +63,11 @@ export const KanjiList = () => {
   );
 };
 
-const Root = styled.div``;
+const Root = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const Head = styled.div`
   margin-bottom: 10px;

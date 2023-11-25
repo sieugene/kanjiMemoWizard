@@ -42,9 +42,9 @@ const CardItem = styled(Card)`
   padding: 10px;
   min-width: 150px;
   max-width: 150px;
+  max-height: 160px;
   z-index: 1;
   display: flex;
-  flex-wrap: wrap;
   height: 100%;
 `;
 

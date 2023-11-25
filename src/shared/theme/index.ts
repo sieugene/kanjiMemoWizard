@@ -1,6 +1,6 @@
 import { FONTS_CONFIG } from "./fonts";
 
-const breakpointsValues = {
+export const breakpointsValues = {
   sm: 640,
   md: 768,
   lg: 1024,
