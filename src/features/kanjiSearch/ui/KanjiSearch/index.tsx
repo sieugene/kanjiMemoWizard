@@ -49,7 +49,7 @@ export const KanjiSearch = () => {
                   label={t("Search")}
                   isClearable
                   radius="lg"
-                  placeholder={t("Type to search...")}
+                  placeholder={t("Type kanji or sentence...")}
                   startContent={<SearchIconStyled />}
                   onChange={(e) => setInput(e.target.value)}
                 />
