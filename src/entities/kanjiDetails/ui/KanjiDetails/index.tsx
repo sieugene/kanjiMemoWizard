@@ -7,8 +7,8 @@ import { Hanzi } from "@/entities/HanziWriter";
 import { KanjiSteps } from "@/entities/KanjiSteps/ui";
 import { KanjiSvg } from "@/features/KanjivgAnimate";
 import { KanjiMnemonic } from "../KanjiMnemonic";
-import { KanjiSentences } from "../KanjiSentences";
 import { KanjiTree } from "../KanjiTree";
+import { KanjiSentences } from "@/entities/KanjiSentences/ui";
 
 type Props = {
   symbol: string;
@@ -85,6 +85,9 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
       <h2>{t("Sentences")}</h2>
 
       <Card>
+        <CardHeader className="flex gap-3">
+          <KanjiSentences.Controls symbol={symbol} />
+        </CardHeader>
         <CardBody>
           <KanjiSentences symbol={symbol} />
         </CardBody>

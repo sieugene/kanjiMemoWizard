@@ -2,8 +2,11 @@
 import { WriteGrid } from "@/shared/ui";
 import { Button } from "@nextui-org/react";
 import HanziWriter, { HanziWriterOptions } from "hanzi-writer";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { getHanziLoader } from "../../lib/getHanziLoader";
+import { useHanziLoaderValidate } from "../../hooks/useHanziLoaderValidate";
 
 type Props = {
   symbol: string;
@@ -19,24 +22,29 @@ const options: Partial<HanziWriterOptions> = {
   delayBetweenStrokes: 10,
 };
 
-export const Hanzi: FC<Props> = ({ symbol }) => {
-  const [mode, setMode] = useState<"default" | "quiz">("default");
-  const writer = useRef<HanziWriter | null>(null);
-  useEffect(() => {
-    if (!symbol) return;
+function getHanziId(symbol: string) {
+  return `character-target-div-${symbol}`;
+}
 
-    writer.current = HanziWriter?.create("character-target-div", symbol, {
+export const Hanzi: FC<Props> = ({ symbol }) => {
+  const { t } = useTranslation();
+
+  const { data, isLoading } = useHanziLoaderValidate(symbol);
+  const [_, setMode] = useState<"default" | "quiz">("default");
+  const [isInited, setInit] = useState(false);
+  const writer = useRef<HanziWriter | null>(null);
+  const quizModeNotSupported = useMemo(() => {
+    return !isLoading && !data;
+  }, [data, isLoading]);
+
+  useEffect(() => {
+    if (!symbol || !!writer.current || !data) return;
+    writer.current = HanziWriter?.create(getHanziId(symbol), symbol, {
       ...options,
-      charDataLoader: (char, onLoad, onError) => {
-        fetch(
-          `https://cdn.jsdelivr.net/npm/hanzi-writer-data-jp@0/${char}.json`
-        )
-          .then((res) => res.json())
-          .then(onLoad)
-          .catch(onError);
-      },
+      charDataLoader: getHanziLoader,
     });
-  }, [symbol]);
+    setInit(true);
+  }, [symbol, data]);
 
   const quizMode = () => {
     if (!writer.current) return;
@@ -53,16 +61,24 @@ export const Hanzi: FC<Props> = ({ symbol }) => {
 
   return (
     <Root>
-      <Grid>
-        <WriteGrid className="write" />
-      </Grid>
-      <div
-        id="character-target-div"
-        style={{ zIndex: 1, position: "relative" }}
-      />
-      <Actions>
-        <Button onClick={quizMode}>quiz</Button>
-      </Actions>
+      {quizModeNotSupported ? (
+        <h2>{t("Quiz mode not supported")}</h2>
+      ) : (
+        <>
+          <Grid>
+            <WriteGrid className="write" />
+          </Grid>
+          <div
+            id={getHanziId(symbol)}
+            style={{ zIndex: 1, position: "relative" }}
+          />
+          {isInited && (
+            <Actions>
+              <Button onClick={quizMode}>{t("quiz")}</Button>
+            </Actions>
+          )}
+        </>
+      )}
     </Root>
   );
 };

@@ -1,15 +1,22 @@
-import { FC } from "react";
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useKanjiSentences } from "../../hooks/useKanjiSentences";
-import { CircularProgress, ScrollShadow } from "@nextui-org/react";
+import { CircularProgress, ScrollShadow, Switch } from "@nextui-org/react";
 import styled from "styled-components";
 import ReactCountryFlag from "react-country-flag";
 import { KanjiConverter } from "@/entities/KanjiConverter/ui";
+import { FC } from "react";
+import { useKanjiSentencesStore } from "../../store";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   symbol: string;
 };
-export const KanjiSentences: FC<Props> = ({ symbol }) => {
+type ReactSubcomponent = FC<Props> & {
+  Controls: FC<Props>;
+};
+export const KanjiSentences: ReactSubcomponent = ({ symbol }) => {
   const { isLoading, data } = useKanjiSentences({ symbol: symbol });
+  const { showFurigana } = useKanjiSentencesStore();
 
   return (
     <Root>
@@ -31,7 +38,7 @@ export const KanjiSentences: FC<Props> = ({ symbol }) => {
 
                     <KanjiConverter
                       text={info.sentence}
-                      showFurigana
+                      showFurigana={showFurigana}
                       asElement={<h2 />}
                     />
                   </Item>
@@ -53,6 +60,20 @@ export const KanjiSentences: FC<Props> = ({ symbol }) => {
     </Root>
   );
 };
+
+KanjiSentences.Controls = () => {
+  const { toggleShowFurigana, showFurigana } = useKanjiSentencesStore();
+  const { t } = useTranslation();
+
+  return (
+    <div className="flex flex-col">
+      <Switch isSelected={showFurigana} onValueChange={toggleShowFurigana}>
+        {t("Show furigana")}
+      </Switch>
+    </div>
+  );
+};
+KanjiSentences.Controls.displayName = "Controls";
 
 const Root = styled.div``;
 

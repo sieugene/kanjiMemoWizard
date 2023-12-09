@@ -1,10 +1,12 @@
 import { NihongoSharkDataService } from "./data/nihongo-shark.data.service";
+import { MnemonicData } from "./mnemonic-types";
 import { KanjiDamageScrapper } from "./model/kanji-damage-scrapper";
 import { NihongoMonashScrapper } from "./model/nihongo-monash-scrapper";
 import { RtegaScrapper } from "./model/rtega-scrapper";
 
 class SingletonService {
   private static instance: SingletonService;
+  private cache = new Map<string, MnemonicData[]>();
 
   private constructor() {}
 
@@ -14,8 +16,12 @@ class SingletonService {
     }
     return SingletonService.instance;
   }
-  // TODO node cache
+
   async getMnemonics(symbol: string) {
+    const cacheData = this.cache.get(symbol);
+    if (cacheData?.length) {
+      return cacheData;
+    }
     const kanjiDamage = await KanjiDamageScrapper.getInstance()
       .scrapData(symbol)
       .catch(() => null);
@@ -26,7 +32,13 @@ class SingletonService {
       .scrapData(symbol)
       .catch(() => null);
     const nihongoShark = NihongoSharkDataService.getInstance().findData(symbol);
-    return [kanjiDamage, nihongoMonash, rtega, nihongoShark].filter((a) => !!a);
+    const data = [kanjiDamage, nihongoMonash, rtega, nihongoShark].filter(
+      (a) => !!a?.mnemonic
+    ) as MnemonicData[];
+
+    this.cache.set(symbol, data);
+
+    return data;
   }
 }
 
