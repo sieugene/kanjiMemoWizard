@@ -31,19 +31,18 @@ export const Hanzi: FC<Props> = ({ symbol }) => {
 
   const { data, isLoading } = useHanziLoaderValidate(symbol);
   const [_, setMode] = useState<"default" | "quiz">("default");
-  const [isInited, setInit] = useState(false);
+
   const writer = useRef<HanziWriter | null>(null);
   const quizModeNotSupported = useMemo(() => {
     return !isLoading && !data;
   }, [data, isLoading]);
 
   useEffect(() => {
-    if (!symbol || !!writer.current || !data) return;
+    if (!symbol || writer?.current?._char === symbol || !data) return;
     writer.current = HanziWriter?.create(getHanziId(symbol), symbol, {
       ...options,
       charDataLoader: getHanziLoader,
     });
-    setInit(true);
   }, [symbol, data]);
 
   const quizMode = () => {
@@ -69,14 +68,13 @@ export const Hanzi: FC<Props> = ({ symbol }) => {
             <WriteGrid className="write" />
           </Grid>
           <div
+            key={getHanziId(symbol)}
             id={getHanziId(symbol)}
             style={{ zIndex: 1, position: "relative" }}
           />
-          {isInited && (
-            <Actions>
-              <Button onClick={quizMode}>{t("quiz")}</Button>
-            </Actions>
-          )}
+          <Actions>
+            <Button onClick={quizMode}>{t("quiz")}</Button>
+          </Actions>
         </>
       )}
     </Root>
