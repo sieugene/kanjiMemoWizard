@@ -18,7 +18,7 @@ export const KanjiSteps: FC<{ symbol: string }> = ({ symbol }) => {
             <FullPart dangerouslySetInnerHTML={{ __html: ghost }} />
             <Step dangerouslySetInnerHTML={{ __html: step }} />
             <Grid>
-              <WriteGrid />
+              <WriteGrid size={100} />
             </Grid>
           </StepBody>
         ))}
