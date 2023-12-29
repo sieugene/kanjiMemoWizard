@@ -1,7 +1,8 @@
 import { useKanjiList } from "@/features/kanjiList/hooks/useKanjiList";
 import { Kanji } from "@/shared/data";
 import { useDebounce } from "@/shared/hooks/useDebounce";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useSearchKanjiStore } from "../store";
 
 function searchKanjiInArray(sentence: string, kanjiArray: Kanji[]): Kanji[] {
   const kanjiInSentence = sentence.match(/[\u4e00-\u9faf]/g);
@@ -24,7 +25,7 @@ function searchKanjiInArray(sentence: string, kanjiArray: Kanji[]): Kanji[] {
 }
 
 export const useSearchKanji = () => {
-  const [input, setInput] = useState("");
+  const { input, setInput } = useSearchKanjiStore();
   const debouncedInput = useDebounce<string>(input, 500);
   const list = useKanjiList();
   const applySearchFilter = useMemo(() => {

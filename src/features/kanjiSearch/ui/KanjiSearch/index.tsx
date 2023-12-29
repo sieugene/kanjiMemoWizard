@@ -17,6 +17,7 @@ import { useMemo } from "react";
 import { ROUTES } from "@/shared/routes";
 import Link from "next/link";
 import { css } from "styled-components";
+import { useHeaderStore } from "@/widgets/Header/store";
 
 export const KanjiSearch = () => {
   const { data, input, setInput, debouncedInput } = useSearchKanji();
@@ -27,6 +28,7 @@ export const KanjiSearch = () => {
   const hasData = useMemo(() => data.length >= 1, [data.length]);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { t } = useTranslation();
+  const { close: closeHeader } = useHeaderStore();
 
   return (
     <>
@@ -45,9 +47,10 @@ export const KanjiSearch = () => {
             <>
               <ModalHeader className="flex flex-col gap-1">
                 <Input
-                  value={input}
+                  defaultValue={input}
                   label={t("Search")}
                   isClearable
+                  onClear={() => {}}
                   radius="lg"
                   placeholder={t("Type kanji or sentence...")}
                   startContent={<SearchIconStyled />}
@@ -70,8 +73,12 @@ export const KanjiSearch = () => {
                         return (
                           <Preview key={a.kanji}>
                             <Link
-                              onClick={onClose}
+                              onClick={() => {
+                                onClose();
+                                closeHeader();
+                              }}
                               href={ROUTES.kanji(a.kanji)}
+                              shallow
                             >
                               {a.kanji}
                             </Link>
@@ -92,7 +99,7 @@ export const KanjiSearch = () => {
               </Body>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
-                  Close
+                  {t("Close")}
                 </Button>
                 {/* <Button color="primary" onPress={onClose}>
                   Action

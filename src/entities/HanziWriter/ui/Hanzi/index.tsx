@@ -10,23 +10,23 @@ import { useHanziLoaderValidate } from "../../hooks/useHanziLoaderValidate";
 
 type Props = {
   symbol: string;
+  size: number;
 };
 
 const options: Partial<HanziWriterOptions> = {
-  width: 100,
-  height: 100,
   padding: 5,
   radicalColor: "#168F16", // green
   showOutline: false,
   strokeAnimationSpeed: 5,
   delayBetweenStrokes: 10,
+  drawingWidth: 30,
 };
 
-function getHanziId(symbol: string) {
-  return `character-target-div-${symbol}`;
+function getHanziId(symbol: string, size: number) {
+  return `character-target-div-${symbol}-${size}`;
 }
 
-export const Hanzi: FC<Props> = ({ symbol }) => {
+export const Hanzi: FC<Props> = ({ symbol, size }) => {
   const { t } = useTranslation();
 
   const { data, isLoading } = useHanziLoaderValidate(symbol);
@@ -39,20 +39,20 @@ export const Hanzi: FC<Props> = ({ symbol }) => {
 
   useEffect(() => {
     if (!symbol || writer?.current?._char === symbol || !data) return;
-    writer.current = HanziWriter?.create(getHanziId(symbol), symbol, {
+    writer.current = HanziWriter?.create(getHanziId(symbol, size), symbol, {
       ...options,
       charDataLoader: getHanziLoader,
+      height: size,
+      width: size,
     });
-  }, [symbol, data]);
+  }, [symbol, data, size]);
 
   const quizMode = () => {
     if (!writer.current) return;
     writer.current._options = {
       ...writer.current._options,
       showCharacter: false,
-      showOutline: false,
       showHintAfterMisses: 1,
-      highlightOnComplete: false,
     };
     writer.current.quiz();
     setMode("quiz");
@@ -64,12 +64,12 @@ export const Hanzi: FC<Props> = ({ symbol }) => {
         <h2>{t("Quiz mode not supported")}</h2>
       ) : (
         <>
-          <Grid>
-            <WriteGrid className="write" />
+          <Grid gridSize={size}>
+            <WriteGrid className="write" size={size} />
           </Grid>
           <div
-            key={getHanziId(symbol)}
-            id={getHanziId(symbol)}
+            key={getHanziId(symbol, size)}
+            id={getHanziId(symbol, size)}
             style={{ zIndex: 1, position: "relative" }}
           />
           <Actions>
@@ -83,10 +83,10 @@ export const Hanzi: FC<Props> = ({ symbol }) => {
 
 const Root = styled.div``;
 
-const Grid = styled.div`
+const Grid = styled.div<{ gridSize: number }>`
   background: white;
-  width: 100px;
-  height: 100px;
+  width: ${({ gridSize }) => `${gridSize}px`};
+  height: ${({ gridSize }) => `${gridSize}px`};
   z-index: 0;
   position: absolute;
 `;

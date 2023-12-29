@@ -5,6 +5,15 @@ import { Button } from "@nextui-org/react";
 
 const locales = nextI18nextConfig.i18n.locales;
 
+function getLocaleName(locale: string) {
+  switch (locale) {
+    case "ja":
+      return "日本語";
+    default:
+      return locale;
+  }
+}
+
 export const SwitchLanguage = () => {
   const onSwitch = useSwitchLanguage();
 
@@ -12,7 +21,7 @@ export const SwitchLanguage = () => {
     <Switch>
       {locales.map((locale) => (
         <Option key={locale} onClick={() => onSwitch(locale)}>
-          {locale}
+          {getLocaleName(locale)}
         </Option>
       ))}
     </Switch>

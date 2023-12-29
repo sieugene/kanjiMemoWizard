@@ -21,7 +21,7 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
     <Container>
       <Split>
         <MainInfo>
-          <h2>Base Info</h2>
+          <Title>{t("Base Info")}</Title>
           <Card style={{ height: "100%" }}>
             <CardHeader>
               <DetailsHeader>
@@ -36,30 +36,44 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
               style={{ height: "100%" }}
             >
               <BaseDetails>
-                <KanjiSvg symbol={symbol} animated colorize />
+                <KanjiSvg
+                  symbol={symbol}
+                  animated
+                  colorize
+                  animateType="btnClick"
+                />
+
                 <Meanings>
-                  <b>Meanings:</b>
-                  <p>
+                  <TitleCat>{t("Meanings")}:</TitleCat>
+                  <List>
                     {kanji?.meanings?.map((a, index) => {
                       const prefix =
                         kanji.meanings.length === index + 1 ? "" : ",";
-                      return ` ${a} ${prefix}`;
+                      return <SmallText key={a}>{` ${a} ${prefix}`}</SmallText>;
                     })}
-                  </p>
+                  </List>
                 </Meanings>
                 <Readings>
-                  <div className="details">
-                    <h3>{t("ON:")} </h3>
-                    <p>{kanji?.readings_on.map((a) => a)}</p>
-                    <h3>{t("KUN:")} </h3>
-                    <p>{kanji?.readings_kun.map((a) => a)}</p>
-                  </div>
+                  <TitleCat>{t("ON:")} </TitleCat>
+                  <List>
+                    {kanji?.readings_on.map((a) => {
+                      return <SmallText key={a}>{a}</SmallText>;
+                    })}
+                  </List>
+                  <TitleCat>{t("KUN:")} </TitleCat>
+                  <List>
+                    {kanji?.readings_kun.map((a) => {
+                      return <SmallText key={a}>{a}</SmallText>;
+                    })}
+                  </List>
                 </Readings>
                 <Parts>
-                  <h2> {t("Parts:")} </h2>
-                  {kanji?.radicals?.map((a, index) => (
-                    <p key={index}>{a}</p>
-                  ))}
+                  <TitleCat> {t("Parts:")} </TitleCat>
+                  <List>
+                    {kanji?.radicals?.map((a, index) => (
+                      <SmallText key={index}>{a}</SmallText>
+                    ))}
+                  </List>
                 </Parts>
               </BaseDetails>
               <Steps>
@@ -70,19 +84,19 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
         </MainInfo>
 
         <Mnemonics>
-          <h2>{t("Mnemonics")}</h2>
+          <Title>{t("Mnemonics")}</Title>
           <KanjiMnemonic symbol={symbol} />
         </Mnemonics>
       </Split>
 
-      <h2>{t("Kanji Tree")}</h2>
+      <Title>{t("Kanji Tree")}</Title>
       <Card>
         <CardBody>
           <KanjiTree symbol={symbol} />
         </CardBody>
       </Card>
 
-      <h2>{t("Sentences")}</h2>
+      <Title>{t("Sentences")}</Title>
 
       <Card>
         <CardHeader className="flex gap-3">
@@ -93,11 +107,11 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
         </CardBody>
       </Card>
 
-      <h2>{t("Try writing")}</h2>
+      <Title>{t("Try writing")}</Title>
 
       <Card>
         <CardBody>
-          <Hanzi symbol={symbol} />
+          <Hanzi symbol={symbol} size={300} />
         </CardBody>
       </Card>
     </Container>
@@ -108,9 +122,12 @@ const Container = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 15px;
   padding-top: 2rem;
   padding-bottom: 2rem;
+`;
+
+const Title = styled.h2`
+  margin: 15px 0px;
 `;
 
 const Split = styled.div`
@@ -131,22 +148,54 @@ const DetailsHeader = styled.div`
 const BaseDetails = styled.div`
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
+`;
+
+const List = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+`;
+
+const TitleCat = styled.h3`
+  margin: 5px 0px;
+`;
+const SmallText = styled.p`
+  font-weight: 300;
+  line-height: 15px;
+  font-size: 14px;
+  ${({ theme }) => theme.fonts.base.config.style};
+  color: ${({ theme }) => theme.colors.silver};
 `;
 const Steps = styled.div`
   margin-top: 1rem;
 `;
 
 const Readings = styled.div`
-  .details {
-    h3 {
-      margin-bottom: 5px;
+  ${({ theme }) => css`
+    ${theme.breakpoints.lessThan("sm")} {
+      max-width: 100%;
+      width: 100%;
     }
-  }
+  `}
 `;
-const Parts = styled.div``;
+const Parts = styled.div`
+  ${({ theme }) => css`
+    ${theme.breakpoints.lessThan("sm")} {
+      max-width: 100%;
+      width: 100%;
+    }
+  `}
+`;
 
 const Meanings = styled.div`
   max-width: 170px;
+  ${({ theme }) => css`
+    ${theme.breakpoints.lessThan("sm")} {
+      max-width: 100%;
+      width: 100%;
+    }
+  `}
 `;
 
 const MainInfo = styled.div`

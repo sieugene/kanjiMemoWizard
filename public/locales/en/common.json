@@ -1,4 +1,21 @@
 {
-  "title": "Test",
-  "generate": "__NOT_TRANSLATED__"
+  "Quiz mode not supported": "クイズモードはサポートされていません",
+  "quiz": "クイズモード",
+  "Base Info": "基本情報",
+  "Meanings": "意味",
+  "ON:": "音読み:",
+  "KUN:": "訓読み:",
+  "Parts:": "部首:",
+  "Mnemonics": "記憶術",
+  "Kanji Tree": "漢字の木",
+  "Sentences": "Sentences",
+  "Try writing": "文章",
+  "Show furigana": "ふりがなを表示",
+  "Search Kanji": "漢字検索",
+  "Search": "検索",
+  "Type kanji or sentence...": "漢字や文章を入力する...",
+  "Type in search for show results": "検索と入力して検索結果を表示",
+  "Kanji not found": "漢字が見つかりません",
+  "Close": "Close",
+  "animate": "animate"
 }

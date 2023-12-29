@@ -4,6 +4,7 @@ import { FC, useEffect } from "react";
 import styled, { css } from "styled-components";
 import { useKanjiRender } from "../../hooks/useKanjiRender";
 import { AnimateType } from "../../model/KanjiAnimate";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   symbol: string;
@@ -17,6 +18,7 @@ export const KanjiSvg: FC<Props> = ({
   animateType = "svgClick",
   colorize = false,
 }) => {
+  const { t } = useTranslation();
   const { init, html, kanjiUrl, buttonProps } = useKanjiRender({
     symbol,
     animateType,
@@ -40,7 +42,9 @@ export const KanjiSvg: FC<Props> = ({
       {!animated && kanjiUrl && (
         <Image src={kanjiUrl} width={100} height={100} alt={symbol} />
       )}
-      {animateType === "btnClick" && <Button {...buttonProps}>animate</Button>}
+      {animateType === "btnClick" && (
+        <Button {...buttonProps}>{t("animate")}</Button>
+      )}
     </Root>
   );
 };

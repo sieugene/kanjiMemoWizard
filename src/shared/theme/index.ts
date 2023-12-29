@@ -15,6 +15,7 @@ export const theme = {
     primary: "#111",
     secondary: "#0070f3",
     blue: "#3d5aa4",
+    silver: "#a8a7a7",
   },
   fonts: {
     base: FONTS_CONFIG.inter,

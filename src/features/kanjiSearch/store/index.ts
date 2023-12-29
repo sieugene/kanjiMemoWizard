@@ -1,0 +1,1 @@
+export { useSearchKanjiStore } from "./useSearchKanjiStore";

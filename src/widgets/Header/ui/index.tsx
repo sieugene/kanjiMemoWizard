@@ -15,14 +15,15 @@ import {
 } from "@nextui-org/react";
 import NextLink from "next/link";
 import styled, { css } from "styled-components";
+import { useHeaderStore } from "../store";
 
 export const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const { isOpen, toggleOpen } = useHeaderStore();
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} isBlurred>
+    <Navbar isMenuOpen={isOpen} onMenuOpenChange={() => toggleOpen()} isBlurred>
       <NavbarContent>
-        <Toogle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
+        <Toogle aria-label={isOpen ? "Close menu" : "Open menu"} />
 
         <NavbarBrand>
           {/* <AcmeLogo /> */}
