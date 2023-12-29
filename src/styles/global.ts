@@ -90,7 +90,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
-    font-family: var(${({ theme }) => theme.fonts.base._variable});
+    ${({ theme }) => theme.fonts.base.config.style};
   }
 
   /* HTML5 display-role reset for older browsers */

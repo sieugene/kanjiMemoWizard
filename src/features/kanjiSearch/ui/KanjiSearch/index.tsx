@@ -36,7 +36,7 @@ export const KanjiSearch = () => {
         onClick={onOpen}
         startContent={<SearchIconStyled />}
       >
-        <p> {t("Search Kanji")}</p>
+        {t("Search Kanji")}
       </InputButton>
 
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -108,6 +108,7 @@ export const KanjiSearch = () => {
 
 const InputButton = styled(Button)`
   ${({ theme }) => css`
+    /* ${theme.fonts.base.config.style}; */
     ${theme.breakpoints.lessThan("md")} {
     }
   `}
