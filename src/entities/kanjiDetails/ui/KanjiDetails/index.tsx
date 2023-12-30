@@ -9,6 +9,7 @@ import { KanjiSvg } from "@/features/KanjivgAnimate";
 import { KanjiMnemonic } from "../KanjiMnemonic";
 import { KanjiTree } from "../KanjiTree";
 import { KanjiSentences } from "@/entities/KanjiSentences/ui";
+import { useRecommendKanji } from "../../hooks/useRecommendKanji";
 
 type Props = {
   symbol: string;
@@ -16,6 +17,7 @@ type Props = {
 export const KanjiDetails: FC<Props> = ({ symbol }) => {
   const { t } = useTranslation();
   const kanji = useFindKanji(symbol);
+  const recommendKanji = useRecommendKanji(symbol);
 
   return (
     <Container>
@@ -67,14 +69,26 @@ export const KanjiDetails: FC<Props> = ({ symbol }) => {
                     })}
                   </List>
                 </Readings>
-                <Parts>
-                  <TitleCat> {t("Parts:")} </TitleCat>
-                  <List>
-                    {kanji?.radicals?.map((a, index) => (
-                      <SmallText key={index}>{a}</SmallText>
-                    ))}
-                  </List>
-                </Parts>
+                {!!kanji?.radicals?.length && (
+                  <Parts>
+                    <TitleCat> {t("Parts:")} </TitleCat>
+                    <List>
+                      {kanji?.radicals?.map((a, index) => (
+                        <SmallText key={index}>{a}</SmallText>
+                      ))}
+                    </List>
+                  </Parts>
+                )}
+                {!!recommendKanji?.length && (
+                  <Parts>
+                    <TitleCat> {t("Similar:")} </TitleCat>
+                    <List>
+                      {recommendKanji?.map((a, index) => (
+                        <SmallText key={index}>{a.kanji}</SmallText>
+                      ))}
+                    </List>
+                  </Parts>
+                )}
               </BaseDetails>
               <Steps>
                 <KanjiSteps symbol={symbol} />

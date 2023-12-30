@@ -29,6 +29,8 @@ Mnemonic KanjiDamage[https://www.kanjidamage.com/]
 
 Kanji list [https://github.com/davidluzgouveia/kanji-data]
 
+Similar-kanji [https://github.com/siikamiika/similar-kanji]
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
