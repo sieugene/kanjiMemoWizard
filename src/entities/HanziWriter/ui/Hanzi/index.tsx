@@ -5,8 +5,9 @@ import HanziWriter, { HanziWriterOptions } from "hanzi-writer";
 import { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { getHanziLoader } from "../../lib/getHanziLoader";
 import { useHanziLoaderValidate } from "../../hooks/useHanziLoaderValidate";
+import { getHanziLoader } from "../../lib/getHanziLoader";
+import { useLanguageStore } from "@/widgets/Language/store";
 
 type Props = {
   symbol: string;
@@ -22,13 +23,14 @@ const options: Partial<HanziWriterOptions> = {
   drawingWidth: 30,
 };
 
-function getHanziId(symbol: string, size: number) {
-  return `character-target-div-${symbol}-${size}`;
+function getHanziId(symbol: string) {
+  return `character-target-div-${symbol}`;
 }
 
 export const Hanzi: FC<Props> = ({ symbol, size }) => {
   const { t } = useTranslation();
-
+  const hanziId = useMemo(() => getHanziId(symbol), [symbol]);
+  const { language } = useLanguageStore();
   const { data, isLoading } = useHanziLoaderValidate(symbol);
   const [_, setMode] = useState<"default" | "quiz">("default");
 
@@ -38,14 +40,15 @@ export const Hanzi: FC<Props> = ({ symbol, size }) => {
   }, [data, isLoading]);
 
   useEffect(() => {
-    if (!symbol || writer?.current?._char === symbol || !data) return;
-    writer.current = HanziWriter?.create(getHanziId(symbol, size), symbol, {
+    if (!symbol || !data) return;
+    writer?.current?.target?.node?.remove();
+    writer.current = HanziWriter?.create(hanziId, symbol, {
       ...options,
       charDataLoader: getHanziLoader,
       height: size,
       width: size,
     });
-  }, [symbol, data, size]);
+  }, [symbol, data, language]);
 
   const quizMode = () => {
     if (!writer.current) return;
@@ -68,8 +71,8 @@ export const Hanzi: FC<Props> = ({ symbol, size }) => {
             <WriteGrid className="write" size={size} />
           </Grid>
           <div
-            key={getHanziId(symbol, size)}
-            id={getHanziId(symbol, size)}
+            key={hanziId}
+            id={hanziId}
             style={{ zIndex: 1, position: "relative" }}
           />
           <Actions>
