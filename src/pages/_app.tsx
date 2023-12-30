@@ -12,7 +12,7 @@ function App({
   Component,
   pageProps,
 }: AppProps<{ _nextI18Next: { initialLocale: LanguageState["language"] } }>) {
-  useSyncLanguage(pageProps._nextI18Next.initialLocale);
+  useSyncLanguage(pageProps?._nextI18Next?.initialLocale || "en");
   return (
     <>
       <Head>
