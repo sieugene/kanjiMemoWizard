@@ -104,7 +104,7 @@ export class KanjiAnimate {
   private colorizeParts(svg?: cheerio.Cheerio<cheerio.Element>) {
     this.isInstalled();
     const elements = this.getRadicalParts();
-    const mainParts = elements[this.symbol];
+    const mainParts = elements[this.symbol] || [this.symbol];
 
     [...mainParts].map((radical, index) => {
       const partElement = svg?.find(`[kvg\\:element="${radical}"]`);

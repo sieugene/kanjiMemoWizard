@@ -133,6 +133,7 @@ const Title = styled.h2`
 const Split = styled.div`
   display: flex;
   gap: 1rem;
+  height: 100%;
   ${({ theme }) => css`
     ${theme.breakpoints.lessThan("xl")} {
       flex-direction: column;
@@ -201,6 +202,9 @@ const Meanings = styled.div`
 const MainInfo = styled.div`
   min-width: 45%;
   max-width: 60%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
   ${({ theme }) => css`
     ${theme.breakpoints.lessThan("xl")} {
       max-width: 100%;
@@ -211,4 +215,6 @@ const MainInfo = styled.div`
 
 const Mnemonics = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
 `;

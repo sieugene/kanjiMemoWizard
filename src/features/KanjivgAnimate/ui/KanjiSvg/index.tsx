@@ -42,7 +42,7 @@ export const KanjiSvg: FC<Props> = ({
       {!animated && kanjiUrl && (
         <Image src={kanjiUrl} width={100} height={100} alt={symbol} />
       )}
-      {animateType === "btnClick" && (
+      {animateType === "btnClick" && html && (
         <Button {...buttonProps}>{t("animate")}</Button>
       )}
     </Root>
