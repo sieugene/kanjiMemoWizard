@@ -4,6 +4,8 @@ import {
   GetMnemonicsResponse,
   GetSentencesQueryArgs,
   GetSentencesResponse,
+  SearchForPhraseQueryArgs,
+  SearchForPhraseResponse,
 } from "@/server";
 
 import axios from "axios";
@@ -24,5 +26,9 @@ export const MAIN_API = {
           text,
         },
       }),
+  },
+  jisho: {
+    searchForPhrase: ({ text }: SearchForPhraseQueryArgs) =>
+      axios.get<SearchForPhraseResponse>(`/api/search?text=${text}`),
   },
 };

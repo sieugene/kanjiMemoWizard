@@ -1,0 +1,1 @@
+export { JishoSearcher } from "./JishoSearcher";

@@ -46,14 +46,18 @@ export const KanjiSearch = () => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <Input
+                <SearchInput
                   defaultValue={input}
                   label={t("Search")}
-                  isClearable
-                  onClear={() => {}}
+                  onClear={() => setInput("")}
                   radius="lg"
                   placeholder={t("Type kanji or sentence...")}
                   startContent={<SearchIconStyled />}
+                  endContent={
+                    <MoreSearchBtn href={ROUTES.search(input)} shallow>
+                      <Button>{t("Search more")}</Button>
+                    </MoreSearchBtn>
+                  }
                   onChange={(e) => setInput(e.target.value)}
                 />
               </ModalHeader>
@@ -120,6 +124,18 @@ const InputButton = styled(Button)`
     }
   `}
 `;
+const SearchInput = styled(Input)`
+  div {
+    &:first-of-type {
+      height: 65px;
+      padding-bottom: 8px;
+    }
+  }
+  input {
+    padding-right: 130px;
+  }
+`;
+const MoreSearchBtn = styled(Link)``;
 const Body = styled(ModalBody)``;
 const ScrollContent = styled.div`
   height: 400px;

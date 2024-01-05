@@ -6,3 +6,6 @@ export type { GetSentencesQueryArgs } from "./sentences/sentences-schema";
 export { FuriganaContoller } from "./furigana/furigana-controller";
 export type { GetFuriganaResponse } from "./furigana/furigana-types";
 export type { GetFuriganaQueryArgs } from "./furigana/furigana-schema";
+export { JishoContoller } from "./jisho/jisho-controller";
+export type { SearchForPhraseResponse } from "./jisho/jisho-types";
+export type { SearchForPhraseQueryArgs } from "./jisho/mnemonic-schema";
