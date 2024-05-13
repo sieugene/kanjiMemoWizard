@@ -2,18 +2,31 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useRadicalsTree } from "../../hooks/useRadicalsTree";
 import { KanjiParts } from "@/features/KanjivgAnimate/types";
+import { findKanjiBySymbol } from "@/features/kanjiList/lib/findKanjiBySymbol";
+import { ROUTES } from "@/shared/routes";
+import Link from "next/link";
 
 function tree(kanji: string, deep: number, treeData?: KanjiParts) {
   const nextDeep = deep + 1;
-  return treeData?.[kanji]?.map((key, index) => (
-    <ul
-      key={nextDeep + index}
-      className={`depp-${nextDeep} ${deep === 0 ? "tree" : ""}`}
-    >
-      <li>{key}</li>
-      {tree(key, nextDeep, treeData)}
-    </ul>
-  ));
+  return treeData?.[kanji]?.map((key, index) => {
+    const kanjiIsExist = findKanjiBySymbol(key);
+    const link = kanjiIsExist ? `${ROUTES.kanji(kanjiIsExist.kanji)}` : "";
+    return (
+      <ul
+        key={nextDeep + index}
+        className={`depp-${nextDeep} ${deep === 0 ? "tree" : ""}`}
+      >
+        {link ? (
+          <li>
+            <Link href={link}>{key} </Link>
+          </li>
+        ) : (
+          <li>{key}</li>
+        )}
+        {tree(key, nextDeep, treeData)}
+      </ul>
+    );
+  });
 }
 
 type Props = {
@@ -63,6 +76,9 @@ const Root = styled.div`
     padding: 6px 1.5em; /* indentation + .5em */
     position: relative;
     font-size: 1rem;
+    a{
+      color: ${({ theme }) => theme.colors.blue};
+    }
   }
 
   .tree li:before {

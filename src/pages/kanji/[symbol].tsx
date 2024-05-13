@@ -1,5 +1,5 @@
 import { KanjiDetails } from "@/entities/kanjiDetails";
-import { getKanjiList } from "@/features/kanjiList/lib/getKanjiList";
+import { findKanjiBySymbol } from "@/features/kanjiList/lib/findKanjiBySymbol";
 import { ROUTES } from "@/shared/routes";
 import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -22,8 +22,7 @@ const KanjiPage = () => {
 export const getServerSideProps = (async (context) => {
   const query = context.query as { symbol: string };
   const locale = context.locale || "";
-  const list = getKanjiList();
-  const exist = list.find((a) => a.kanji === query.symbol);
+  const exist = findKanjiBySymbol(query.symbol);
   if (exist) {
     return {
       props: {
